@@ -38,22 +38,22 @@
 (erc-services-mode t)
 (setq erc-prompt-for-nickserv-password nil
       erc-nickserv-passwords
-      `((freenode (("mkolb" . ,freenode-nickone-pass))))
-      erc-email-userid "mak"
-      erc-nick "mkolb"
+      `((freenode (("livmo" . ,freenode-nickone-pass))))
+      erc-email-userid "larry"
+      erc-nick "livmo"
       erc-paranoid t
       erc-port 6667
       erc-prompt-for-password nil
       erc-public-away-p t
       erc-server "irc.freenode.net"
-      erc-user-full-name "Matt Kolb")
+      erc-user-full-name "Larry Livermore")
 ;; </erc>
 
 ;; <mu4e>
 (require 'mu4e)
 (require 'org-mu4e)
-(setq mu4e-maildir "/home/mak/.mail/deltak"
-      mu4e-attachment-dir "~/Ubuntu One/Deltak/Reference"
+(setq mu4e-maildir "/home/livmo/.mail/work"
+      mu4e-attachment-dir "~/Ubuntu One/Reference"
       mu4e-get-mail-command "true"
       mu4e-update-interval nil ;; update every 5 minutes
       mu4e-html2text-command "w3m -dump -T text/html"
@@ -70,10 +70,10 @@
  smtpmail-default-smtp-server "localhost"
  smtpmail-smtp-server         "localhost"
  smtpmail-smtp-service        1025
- smtpmail-local-domain        "deltak-innovation.com"
+ smtpmail-local-domain        "example.com"
  smtpmail-auth-credentials "~/.authinfo"
- user-mail-address "matt.kolb@deltak-innovation.com"
- user-full-name  "Matt Kolb")
+ user-mail-address "livmo@example.com"
+ user-full-name  "Larry Livermore")
 ;; </smtp>
 
 ;; <functions>
