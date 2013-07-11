@@ -1,3 +1,7 @@
+; -*-Lisp-*-
+;; Author: Matt Kolb <kolb722@gmail.com>
+;; Used with: Emacs 24.2.1 on Ubuntu Linux 13.04
+
 ;; <packages>
 (require 'package)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
@@ -23,6 +27,9 @@
 ;; </org>
 
 ;; <appearance>
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
 (global-rainbow-delimiters-mode)
 (setq my-font "Droid Sans Mono-13")
 (set-default-font my-font)
