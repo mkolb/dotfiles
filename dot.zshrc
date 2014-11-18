@@ -38,10 +38,18 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 export TERM=xterm-256color
 export EDITOR=emacs
-export PATH=/usr/local/zend/bin:$PATH
+export PATH=~/android-studio/bin:/usr/local/zend/bin:$PATH
 
 alias e="emacsclient -t"
 alias zlog="sudo tail -f /usr/local/zend/var/log/php.log"
 
+export GOROOT=$HOME/go
+export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:~/mongodb/bin
+export PATH=$PATH:~/Documents/WebStorm/bin
+
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"

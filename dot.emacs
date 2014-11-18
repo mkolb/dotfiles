@@ -11,10 +11,19 @@
 ;; </packages>
 
 ;; <programming>
+(global-auto-complete-mode t)
 (add-hook 'php-mode-hook
 	  (lambda()
 	    (linum-on)))
 (require 'rainbow-delimiters)
+
+(setq python-shell-interpreter "/usr/bin/ipython")
+(require 'ipython)
+
+(setq js-indent-level 2)
+(add-hook 'json-mode-hook
+          (lambda ()
+            (setq js-indent-level 2)))
 ;; </programming>
 
 ;; <text>
@@ -27,11 +36,13 @@
 ;; </org>
 
 ;; <appearance>
+(require 'color-theme)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (global-rainbow-delimiters-mode)
-(setq my-font "Droid Sans Mono-13")
+(setq my-font "Droid Sans Mono-12")
+(color-theme-solarized-dark)
 (set-default-font my-font)
 ;; </appearance>
 
@@ -55,33 +66,6 @@
       erc-server "irc.freenode.net"
       erc-user-full-name "Matt Kolb")
 ;; </erc>
-
-;; <mu4e>
-(require 'mu4e)
-(require 'org-mu4e)
-(setq mu4e-maildir "/home/mak/.mail/deltak"
-      mu4e-attachment-dir "~/Ubuntu One/Deltak/Reference"
-      mu4e-get-mail-command "true"
-      mu4e-update-interval nil ;; update every 5 minutes
-      mu4e-html2text-command "w3m -dump -T text/html"
-      mu4e-view-show-images t
-      org-mu4e-convert-to-html t
-      mu4e-drafts-folder "/Drafts"
-      mu4e-sent-folder "/Sent Items"
-      mu4e-trash-folder "/Deleted Items")
-;; </mu4e>
-
-;; <smtp>
-(setq
- message-send-mail-function   'smtpmail-send-it
- smtpmail-default-smtp-server "localhost"
- smtpmail-smtp-server         "localhost"
- smtpmail-smtp-service        1025
- smtpmail-local-domain        "deltak-innovation.com"
- smtpmail-auth-credentials "~/.authinfo"
- user-mail-address "matt.kolb@deltak-innovation.com"
- user-full-name  "Matt Kolb")
-;; </smtp>
 
 ;; <functions>
 (defun insert-password-salt ()
