@@ -30,93 +30,67 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
-(global-rainbow-delimiters-mode)
-(setq my-font "Droid Sans Mono-13")
-(set-default-font my-font)
+
+(set-face-attribute 'default nil :font "Fira Code-16" )
+(set-frame-font "Fira Code-16" nil t)
+
+
+
+;; <dracula>
+;; Don't change the font size for some headings and titles (default t)
+(setq dracula-enlarge-headings nil)
+
+;; Adjust font size of titles level 1 (default 1.3)
+(setq dracula-height-title-1 1.25)
+
+;; Adjust font size of titles level 2 (default 1.1)
+(setq dracula-height-title-2 1.15)
+
+;; Adjust font size of titles level 3 (default 1.0)
+(setq dracula-height-title-3 1.05)
+
+;; Adjust font size of document titles (default 1.44)
+(setq dracula-height-doc-title 1.4)
+
+;; Use less pink and bold on the mode-line and minibuffer (default nil)
+(setq dracula-alternate-mode-line-and-minibuffer t)
+
+(load-theme 'dracula t)
+;; </dracula>
+
+;; <ligatures>
+;; Enable the www ligature in every possible major mode
+(ligature-set-ligatures 't '("www"))
+
+;; Enable ligatures in programming modes                                                           
+(ligature-set-ligatures 'prog-mode '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\" "{-" "::"
+                                     ":::" ":=" "!!" "!=" "!==" "-}" "----" "-->" "->" "->>"
+                                     "-<" "-<<" "-~" "#{" "#[" "##" "###" "####" "#(" "#?" "#_"
+                                     "#_(" ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*" "/**"
+                                     "/=" "/==" "/>" "//" "///" "&&" "||" "||=" "|=" "|>" "^=" "$>"
+                                     "++" "+++" "+>" "=:=" "==" "===" "==>" "=>" "=>>" "<="
+                                     "=<<" "=/=" ">-" ">=" ">=>" ">>" ">>-" ">>=" ">>>" "<*"
+                                     "<*>" "<|" "<|>" "<$" "<$>" "<!--" "<-" "<--" "<->" "<+"
+                                     "<+>" "<=" "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<"
+                                     "<~" "<~~" "</" "</>" "~@" "~-" "~>" "~~" "~~>" "%%"))
+
+(global-ligature-mode 't)
+;; </ligatures>
 ;; </appearance>
 
 ;; <eshell>
 (setq eshell-cmpl-cycle-completions nil)
 ;; </eshell>
 
-;; <erc>
-(load "~/.ercpass")
-(require 'erc-services)
-(erc-services-mode t)
-(setq erc-prompt-for-nickserv-password nil
-      erc-nickserv-passwords
-      `((freenode (("livmo" . ,freenode-nickone-pass))))
-      erc-email-userid "larry"
-      erc-nick "livmo"
-      erc-paranoid t
-      erc-port 6667
-      erc-prompt-for-password nil
-      erc-public-away-p t
-      erc-server "irc.freenode.net"
-      erc-user-full-name "Larry Livermore")
-;; </erc>
-
-;; <mu4e>
-(require 'mu4e)
-(require 'org-mu4e)
-(setq mu4e-maildir "/home/livmo/.mail/work"
-      mu4e-attachment-dir "~/Ubuntu One/Reference"
-      mu4e-get-mail-command "true"
-      mu4e-update-interval nil ;; update every 5 minutes
-      mu4e-html2text-command "w3m -dump -T text/html"
-      mu4e-view-show-images t
-      org-mu4e-convert-to-html t
-      mu4e-drafts-folder "/Drafts"
-      mu4e-sent-folder "/Sent Items"
-      mu4e-trash-folder "/Deleted Items")
-;; </mu4e>
-
-;; <smtp>
-(setq
- message-send-mail-function   'smtpmail-send-it
- smtpmail-default-smtp-server "localhost"
- smtpmail-smtp-server         "localhost"
- smtpmail-smtp-service        1025
- smtpmail-local-domain        "example.com"
- smtpmail-auth-credentials "~/.authinfo"
- user-mail-address "livmo@example.com"
- user-full-name  "Larry Livermore")
-;; </smtp>
-
-;; <functions>
-(defun insert-password-salt ()
-  "Insert a string of length 31 suitable for a new password salt in moodle."
-  (interactive)
-  (let ((mycharset "1234567890abcdefghijklmnopqrstyvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()"))
-    (dotimes (i 31)
-      (insert (elt mycharset (random (length mycharset)))))))
-
-(defun show-file-name ()
-  "Show the full path file name in the minibuffer."
-  (interactive)
-  (message (buffer-file-name)))
-;; </functions>
-
-;; <global set keys>
-(global-set-key (kbd "C-c a")
-		'(lambda () (interactive) (ansi-term "/bin/zsh")))
-;; </global set keys>
-
-;; <customize>
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (sanityinc-tomorrow-night)))
- '(custom-safe-themes (quote ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
- '(flymake-phpcs-standard "moodle")
- '(gud-gdb-command-name "gdb --annotate=1")
- '(large-file-warning-threshold nil))
+ '(package-selected-packages '(magit dracula-theme go-eldoc go-mode rainbow-delimiters)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-;; </customize>
