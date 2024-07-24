@@ -5,8 +5,7 @@
 ;; <packages>
 (require 'package)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-			 ("marmalade" . "http://marmalade-repo.org/packages/")
-			 ("melpa" . "http://melpa.milkbox.net/packages/")))
+			 ("melpa" . "http://melpa.org/packages/")))
 (package-initialize)
 ;; </packages>
 
@@ -31,8 +30,8 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 
-(set-face-attribute 'default nil :font "Fira Code-16" )
-(set-frame-font "Fira Code-16" nil t)
+(set-face-attribute 'default nil :font "Intel One Mono-16" )
+(set-frame-font "Intel One Mono-16" nil t)
 
 
 
@@ -87,7 +86,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(magit dracula-theme go-eldoc go-mode rainbow-delimiters)))
+ '(package-selected-packages
+   '(markdown-mode magit dracula-theme go-eldoc go-mode rainbow-delimiters)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
