@@ -1,6 +1,6 @@
 ; -*-Lisp-*-
 ;; Author: Matt Kolb <kolb722@gmail.com>
-;; Used with: Emacs 28.2 on Ubuntu Linux Ubuntu 22.04.2 LTS
+;; Used with: Emacs 30.2 on Ubuntu Linux/WSL2
 
 ;; <packages>
 (require 'package)
@@ -20,29 +20,19 @@
 (use-package company :ensure t)
 (use-package flycheck :ensure t)
 
-;; <lsp-mode>
-(use-package lsp-mode
-    :ensure t
-    :init
-    (setq lsp-keymap-prefix "C-c l")
-    :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-           (typescript-mode . lsp)
-           ;; if you want which-key integration
-           (lsp-mode . lsp-enable-which-key-integration))
-    :commands lsp)
-
-(use-package lsp-ui
-    :ensure t
-    :commands lsp-ui-mode)
-
-
-;; </lsp-mode>
-(require 'lsp-mode)
-(add-hook 'typescript-mode-hook #'lsp)
-
+;; <typescript>
 (use-package prettier-js
     :ensure t
     :hook (typescript-mode . prettier-js-mode))
+(add-hook 'typescript-mode-hook 'eglot-ensure)
+;; </typescript>
+
+;; <eglot>
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '((js-mode typescript-mode)
+		 . ("tsc" "--lsp" "--stdio"))))
+;; </eglot>
 ;; </programming>
 
 ;; <text>
@@ -86,24 +76,7 @@
 (load-theme 'dracula t)
 ;; </dracula>
 
-;; <ligatures>
-;; Enable the www ligature in every possible major mode
-(ligature-set-ligatures 't '("www"))
 
-;; Enable ligatures in programming modes                                                           
-(ligature-set-ligatures 'prog-mode '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\" "{-" "::"
-                                     ":::" ":=" "!!" "!=" "!==" "-}" "----" "-->" "->" "->>"
-                                     "-<" "-<<" "-~" "#{" "#[" "##" "###" "####" "#(" "#?" "#_"
-                                     "#_(" ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*" "/**"
-                                     "/=" "/==" "/>" "//" "///" "&&" "||" "||=" "|=" "|>" "^=" "$>"
-                                     "++" "+++" "+>" "=:=" "==" "===" "==>" "=>" "=>>" "<="
-                                     "=<<" "=/=" ">-" ">=" ">=>" ">>" ">>-" ">>=" ">>>" "<*"
-                                     "<*>" "<|" "<|>" "<$" "<$>" "<!--" "<-" "<--" "<->" "<+"
-                                     "<+>" "<=" "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<"
-                                     "<~" "<~~" "</" "</>" "~@" "~-" "~>" "~~" "~~>" "%%"))
-
-(global-ligature-mode 't)
-;; </ligatures>
 ;; </appearance>
 
 ;; <eshell>
@@ -120,7 +93,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(impatient-showdown impatient-mode uuidgen yaml-mode flycheck-yamllint flymake-yaml flymake-yamllint yaml exec-path-from-shell prettier-js web-mode yasnippet typescript-mode company go-complete flymake-go magit dracula-theme go-eldoc go-mode rainbow-delimiters)))
+   '(company dracula-theme exec-path-from-shell flycheck go-mode lsp-ui
+	     magit prettier-js rainbow-delimiters typescript-mode
+	     web-mode yaml-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
