@@ -1,19 +1,48 @@
 ; -*-Lisp-*-
 ;; Author: Matt Kolb <kolb722@gmail.com>
-;; Used with: Emacs 24.2.1 on Ubuntu Linux 13.04
+;; Used with: Emacs 28.2 on Ubuntu Linux Ubuntu 22.04.2 LTS
 
 ;; <packages>
 (require 'package)
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-			 ("melpa" . "http://melpa.org/packages/")))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(eval-and-compile
+  (setq use-package-always-ensure t
+        use-package-expand-minimally t))
 ;; </packages>
 
 ;; <programming>
-(add-hook 'php-mode-hook
-	  (lambda()
-	    (linum-on)))
-(require 'rainbow-delimiters)
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(use-package company :ensure t)
+(use-package flycheck :ensure t)
+
+;; <lsp-mode>
+(use-package lsp-mode
+    :ensure t
+    :init
+    (setq lsp-keymap-prefix "C-c l")
+    :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+           (typescript-mode . lsp)
+           ;; if you want which-key integration
+           (lsp-mode . lsp-enable-which-key-integration))
+    :commands lsp)
+
+(use-package lsp-ui
+    :ensure t
+    :commands lsp-ui-mode)
+
+
+;; </lsp-mode>
+(require 'lsp-mode)
+(add-hook 'typescript-mode-hook #'lsp)
+
+(use-package prettier-js
+    :ensure t
+    :hook (typescript-mode . prettier-js-mode))
 ;; </programming>
 
 ;; <text>
@@ -79,7 +108,11 @@
 
 ;; <eshell>
 (setq eshell-cmpl-cycle-completions nil)
+;(add-to-list 'exec-path "/home/mak/node/bin/")
 ;; </eshell>
+
+(use-package exec-path-from-shell
+  :config (exec-path-from-shell-initialize))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -87,10 +120,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(markdown-mode magit dracula-theme go-eldoc go-mode rainbow-delimiters)))
+   '(impatient-showdown impatient-mode uuidgen yaml-mode flycheck-yamllint flymake-yaml flymake-yamllint yaml exec-path-from-shell prettier-js web-mode yasnippet typescript-mode company go-complete flymake-go magit dracula-theme go-eldoc go-mode rainbow-delimiters)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'downcase-region 'disabled nil)
